@@ -98,7 +98,7 @@ def make_parser():
     parser.add_argument(
         '-fn',
         '--folder_name',
-        'name of the image dataset folder for the training',
+        help='name of the image dataset folder for the training',
         default='train',
         type=str
     )
