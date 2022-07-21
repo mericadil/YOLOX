@@ -127,7 +127,7 @@ class Exp(BaseExp):
         self.model.train()
         return self.model
 
-    def get_data_loader(self, batch_size, is_distributed, no_aug=False, cache_img=False):
+    def get_data_loader(self, batch_size, is_distributed, no_aug=False, cache_img=False, name='train'):
         from yolox.data import (
             COCODataset,
             TrainTransform,
@@ -149,6 +149,7 @@ class Exp(BaseExp):
                     flip_prob=self.flip_prob,
                     hsv_prob=self.hsv_prob),
                 cache=cache_img,
+                name=name
             )
 
         dataset = MosaicDetection(
@@ -269,13 +270,13 @@ class Exp(BaseExp):
         )
         return scheduler
 
-    def get_eval_loader(self, batch_size, is_distributed, testdev=False, legacy=False):
+    def get_eval_loader(self, batch_size, is_distributed, testdev=False, legacy=False, name="val"):
         from yolox.data import COCODataset, ValTransform
 
         valdataset = COCODataset(
             data_dir=self.data_dir,
             json_file=self.val_ann if not testdev else self.test_ann,
-            name="val2017" if not testdev else "test2017",
+            name=name,
             img_size=self.test_size,
             preproc=ValTransform(legacy=legacy),
         )
@@ -298,10 +299,10 @@ class Exp(BaseExp):
 
         return val_loader
 
-    def get_evaluator(self, batch_size, is_distributed, testdev=False, legacy=False):
+    def get_evaluator(self, batch_size, is_distributed, testdev=False, legacy=False, name='val'):
         from yolox.evaluators import COCOEvaluator
 
-        val_loader = self.get_eval_loader(batch_size, is_distributed, testdev, legacy)
+        val_loader = self.get_eval_loader(batch_size, is_distributed, testdev, legacy, name=name)
         evaluator = COCOEvaluator(
             dataloader=val_loader,
             img_size=self.test_size,

@@ -94,6 +94,14 @@ def make_parser():
         default=None,
         nargs=argparse.REMAINDER,
     )
+
+    parser.add_argument(
+        '-fn',
+        '--folder_name',
+        'name of the image dataset folder for the training',
+        default='train',
+        type=str
+    )
     return parser
 
 

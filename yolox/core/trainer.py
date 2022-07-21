@@ -151,6 +151,7 @@ class Trainer:
             is_distributed=self.is_distributed,
             no_aug=self.no_aug,
             cache_img=self.args.cache,
+            name=self.args.folder_name
         )
         logger.info("init prefetcher, this might take one minute or less...")
         self.prefetcher = DataPrefetcher(self.train_loader)

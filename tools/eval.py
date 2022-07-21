@@ -109,6 +109,14 @@ def make_parser():
         default=None,
         nargs=argparse.REMAINDER,
     )
+
+    parser.add_argument(
+        '-fn',
+        '--folder_name',
+        help='name of the image dataset to evaluate',
+        type=str,
+        default='test'
+    )
     return parser
 
 
@@ -149,7 +157,7 @@ def main(exp, args, num_gpu):
     logger.info("Model Summary: {}".format(get_model_info(model, exp.test_size)))
     logger.info("Model Structure:\n{}".format(str(model)))
 
-    evaluator = exp.get_evaluator(args.batch_size, is_distributed, args.test, args.legacy)
+    evaluator = exp.get_evaluator(args.batch_size, is_distributed, args.test, args.legacy, args.folder_name)
     evaluator.per_class_AP = True
     evaluator.per_class_AR = True
 
