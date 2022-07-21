@@ -174,7 +174,7 @@ class Trainer:
         self.model = model
 
         self.evaluator = self.exp.get_evaluator(
-            batch_size=self.args.batch_size, is_distributed=self.is_distributed
+            batch_size=self.args.batch_size, is_distributed=self.is_distributed, name=self.args.val_folder_name
         )
         # Tensorboard and Wandb loggers
         if self.rank == 0:

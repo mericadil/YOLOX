@@ -102,6 +102,14 @@ def make_parser():
         default='train',
         type=str
     )
+
+    parser.add_argument(
+        '-vfn',
+        '--val_folder_name',
+        help='name of the image dataset folder for the validation',
+        default='val',
+        type=str
+    )
     return parser
 
 
